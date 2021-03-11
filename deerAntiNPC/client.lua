@@ -1,19 +1,16 @@
 -- Slow Thread eh
 Citizen.CreateThread(function()
     while true do
-        clearAreaOfPeds()
+        for ped in EnumeratePeds() do
+            if not IsPedAPlayer(ped) then
+                SetEntityAsMissionEntity( ped, true, true )
+                DeletePed( ped )
+            end
+            Citizen.Wait(500)
+        end
         Citizen.Wait(5000)
     end
 end)
-
-function clearAreaOfPeds()
-    for ped in EnumeratePeds() do
-        if not IsPedAPlayer(ped) then
-            SetEntityAsMissionEntity( ped, true, true )
-            DeletePed( ped )
-        end
-    end
-end
 
 function EnumerateEntities(initFunc, moveFunc, disposeFunc)
     return coroutine.wrap(function()
