@@ -1,14 +1,20 @@
+local whitelistHP = 108  -- THE HP OF PEDS THAT U WANT TO KEEP / USE THIS TO NOT DELETE PEDS THAT ARE SERVER-SPAWNED.
+
+--If you are planning on whitelisting peds you will have to ensure the script that spawns them sets their hp to the above number. 
+-- I recomend not using 108 as the whitelisted hp, as modders may see you using this script and use 108 on spawned peds.
+
+-- MAKE SURE TO CHANGE THIS IN server.LUA AS WELL
+
 -- Slow Thread eh
 Citizen.CreateThread(function()
     while true do
         for ped in EnumeratePeds() do
-            if not IsPedAPlayer(ped) then
-                SetEntityAsMissionEntity( ped, true, true )
-                DeletePed( ped )
+            if not IsPedAPlayer(ped) and GetEntityHealth(ped) ~= whitelistHP then
+                TriggerServerEvent('deerAntiNPC:crackPed', ped)
             end
-            Citizen.Wait(500)
+            Citizen.Wait(10)
         end
-        Citizen.Wait(5000)
+        Citizen.Wait(1000)
     end
 end)
 
