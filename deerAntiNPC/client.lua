@@ -19,6 +19,16 @@ Citizen.CreateThread(function()
     end
 end)
 
+local entityEnumerator = {
+  __gc = function(enum)
+    if enum.destructor and enum.handle then
+      enum.destructor(enum.handle)
+    end
+    enum.destructor = nil
+    enum.handle = nil
+  end
+}
+
 function EnumerateEntities(initFunc, moveFunc, disposeFunc)
     return coroutine.wrap(function()
         local iter, id = initFunc()
