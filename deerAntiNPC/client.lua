@@ -10,7 +10,8 @@ Citizen.CreateThread(function()
     while true do
         for ped in EnumeratePeds() do
             if not IsPedAPlayer(ped) and GetEntityHealth(ped) ~= whitelistHP then
-                TriggerServerEvent('deerAntiNPC:crackPed', ped)
+                SetEntityAsMissionEntity( ped, true, true )
+                DeletePed( ped )
             end
             Citizen.Wait(10)
         end
