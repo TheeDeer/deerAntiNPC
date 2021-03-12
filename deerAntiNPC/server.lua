@@ -8,7 +8,6 @@ local whitelistHP = 108  -- THE HP OF PEDS THAT U WANT TO KEEP / USE THIS TO NOT
 AddEventHandler("entityCreating", function(ent)
     Citizen.Wait(100)
     if GetEntityType(ent) == 1 and GetEntityHealth(ent) ~= whitelistHP then
-        DeleteEntity(ent)
         CancelEvent()
     end
 end)
